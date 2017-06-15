@@ -1,0 +1,27 @@
+File f = new File(nameOfFile);              // Construct a File.
+    if (f.exists()) {                           // Does it exist?
+      if (f.isFile() && f.canRead()) {          // is it a File and can I read it?
+        Scanner input = null;
+        try {
+          input = new Scanner(f);               // The Scanner!
+          while (input.hasNextLine()) {
+            String contents = input.nextLine();
+            System.out.println(contents);       // Print the lines.
+          }
+        } catch (FileNotFoundException e) {
+          e.printStackTrace();
+        } finally {
+          if (input != null) {
+            input.close();                      // Close the file scanner.
+          }
+        }
+      } else if (f.isDirectory()) {             // No, it's a directory!
+        try {
+          System.out.println("File "
+              + f.getCanonicalPath()
+              + " is a directory");
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
