@@ -1,0 +1,45 @@
+package co.aiml;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
+
+public class DOM4JXMLGenerator {
+	static String[][] tutorials = {{"Hello, this is Alice"}, {"hi, I need to look it up"}};
+	public static void main(String[] args) throws IOException {
+		System.out.println(DOM4JXMLGenerator.generateChannelXML());
+	}
+	private static String generateChannelXML() throws IOException {
+		Document document = DocumentHelper.createDocument();
+		Element channelElement = document.addElement("aiml");
+//		channelElement.addElement("category");
+		generateTopicXML(channelElement, "hello", tutorials[0]);
+		generateTopicXML(channelElement, "what is machine learning", tutorials[1]);
+		StringWriter stringWriter = new StringWriter();
+		//print
+//		XMLWriter xMLWriter = new XMLWriter(stringWriter, OutputFormat.createPrettyPrint());
+		//save
+		XMLWriter xMLWriter = new XMLWriter(new FileOutputStream("update.aiml"), OutputFormat.createPrettyPrint());
+		
+		xMLWriter.write(document);
+		xMLWriter.close();
+
+		return stringWriter.getBuffer().toString();
+	}
+	private static void generateTopicXML(Element channelElement, String key, String[] topictutorials) {
+		Element topicElement = channelElement.addElement("category");
+		topicElement.addElement("pattern").addText(key);
+		int i = 0;
+		while(i < topictutorials.length) {
+			topicElement.addElement("template").addText(topictutorials[i++]);
+		}
+		
+	}
+
+}
