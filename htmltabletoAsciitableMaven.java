@@ -10,6 +10,12 @@ public class TableToasciitableDemo {
 		at.getContext().setWidth(30);
 		at.addRule();
 		at.addRow("row 1 col 1", "row 1 col 2");
+		String[] array = new String[2];
+		array[0] = "row 1 col 1";
+		array[1] = "row 1 col 1";
+		at.addRow("row 1 col 1", "row 2 col 2");
+		//When reading elements from other methods
+		at.addRow(new Object[]{array[0],array[0]});
 		at.addRule();
 		at.addRow("row 2 col 1row 2 col 1row 2 col 1row 2 col 1row 2 col 1", "row 2 col 2");
 		at.addRule();
